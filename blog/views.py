@@ -3,10 +3,21 @@ from .models import Post
 
 
 def post_list(request):
-    post = Post.published_objects.all()
+    posts = Post.published_objects.all()
 
     context = {
-        'post': post
+        'posts': posts
     }
 
-    return render(request, 'blog/list.html', context)
+    return render(request, 'blog/post/list.html', context)
+
+
+def post_detail(request, year, month, day, post):
+    posts = get_object_or_404(Post, slug=post, status='published', publish__year=year, publish__month=month,
+                              publish__day=day)
+
+    context = {
+        'posts': posts
+    }
+
+    return render(request, 'blog/post/detail.html', context)
