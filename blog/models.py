@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from taggit.managers import TaggableManager
+
 
 
 # My custom manager
@@ -26,6 +28,7 @@ class Post(models.Model):
 
     objects = models.Manager()
     published_objects = PublishedManager()
+    tags = TaggableManager()
 
     # This method is use for redirecting to single page by creating a link
     def get_absolute_url(self):
