@@ -5,6 +5,7 @@ Blog project using Django framework.
 1. List Posts
 2. Detail Post
 3. Pagination
+4. Share functionality
 
 # What I learned:
 1. Paginator, EmptyPage, PageNotInteger
@@ -12,3 +13,4 @@ Blog project using Django framework.
 3. Creating absolute url
 4. Meta Class
 5. timezone module and it's properties like ('publish.year')
+6. Form and ModelForm
