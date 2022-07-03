@@ -32,7 +32,7 @@ def post_detail(request, year, month, day, post):
                              publish__day=day)
 
     # List of active comments for this post
-    comments = Comment.objects.filter(active=True)
+    comments = post.comments.filter(active=True)
     new_comment = None
     if request.method == 'POST':
         # A comment was posted
@@ -41,6 +41,7 @@ def post_detail(request, year, month, day, post):
             # Create Comment object but don't save to database yet
             new_comment = comment_form.save(commit=False)
             # Assign the current post to the comment
+            print(post)
             new_comment.post = post
             # Save the comment to the database
             new_comment.save()
