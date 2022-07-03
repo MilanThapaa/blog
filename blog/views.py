@@ -41,6 +41,7 @@ def post_detail(request, year, month, day, post):
 def post_share(request, post_id):
     # Retrive post by id
     post = get_object_or_404(Post, id=post_id, status='published')
+    sent = False
     if request.method == 'POST':
         # Form was submitted
         form = EmailPostForm(request.POST)
@@ -52,12 +53,14 @@ def post_share(request, post_id):
             message = f"Read {post.title} at {post_url}\n\n {cd['name']}\'s comments: {cd['comments']}"
             send_mail(subject, message, settings.EMAIL_HOST_USER, [cd['to']], fail_silently=False)
             sent = True
+
     else:
         form = EmailPostForm()
 
     context = {
         'post': post,
-        'form': form
+        'form': form,
+        'sent': sent
     }
 
     return render(request, 'blog/post/share.html', context)
