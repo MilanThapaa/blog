@@ -71,6 +71,12 @@ input[type=submit] {
     font-size:14px;
     text-transform:uppercase;
 }
+
+.search input {
+    clear: none;
+    float: none;
+    border: 1px solid black;
+}
 .errorlist {
     color:#cc0033;
     float:left;

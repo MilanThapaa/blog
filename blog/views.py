@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Comment
+from django.contrib.postgres.search import SearchVector
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, SearchForm
 from django.core.mail import send_mail
 from django.conf import settings
 from taggit.models import Tag
@@ -9,6 +10,7 @@ from django.db.models import Count
 
 
 def post_list(request, tag_slug=None):
+    form = SearchForm()
     object_list = Post.published_objects.all()
     tag = None
     if tag_slug:
@@ -28,7 +30,8 @@ def post_list(request, tag_slug=None):
     context = {
         'page': page,
         'posts': posts,
-        'tag': tag
+        'tag': tag,
+        'form': form
     }
 
     return render(request, 'blog/post/list.html', context)
@@ -99,3 +102,23 @@ def post_share(request, post_id):
     }
 
     return render(request, 'blog/post/share.html', context)
+
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Post.published_objects.annotate(
+                search=SearchVector('title', 'body'),
+            ).filter(search=query)
+    context = {
+        'form': form,
+        'query': query,
+        'results': results
+    }
+    return render(request, 'blog/post/search.html', context)
