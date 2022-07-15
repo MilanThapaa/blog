@@ -8,6 +8,9 @@ Blog project using Django framework.
 4. Share functionality
 5. Comments
 6. Tags
+7. SiteMap
+8. RSS feed
+9. Search functionality
 
 # What I learned:
 1. Paginator, EmptyPage, PageNotInteger
@@ -17,3 +20,7 @@ Blog project using Django framework.
 5. timezone module and it's properties like ('publish.year')
 6. Form and ModelForm
 7. Learned to user taggit module
+8. Custom Template Tags
+9. SiteMap
+10. RSS feed
+11. Search functionality using vector
